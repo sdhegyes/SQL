@@ -1,0 +1,29 @@
+CREATE TABLE Bookstore (id INTEGER PRIMARY KEY, title TEXT, author_name TEXT, section TEXT, price INTEGER, quantity INTEGER);
+
+INSERT INTO Bookstore VALUES (1, "A Book a Week", "Hall, Kate", "Non-Fiction", 8.99, 3);
+INSERT INTO Bookstore VALUES (2, "2K to 10K", "Aaron, Rachel", "Non-Fiction", 6.99, 5);
+INSERT INTO Bookstore VALUES (3, "Frankenstein", "Shelley, Mary", "Classics", 8.99, 42);
+INSERT INTO Bookstore VALUES (4, "Mortal Engines", "Reeve, Philip", "Sci-Fi/Fantasy", 12.99, 3);
+INSERT INTO Bookstore VALUES (5, "The Chimes", "Dickens, Charles", "Classics", 7.99, 14);
+INSERT INTO Bookstore VALUES (6, "Gwendy's Button Box", "King, Stephen", "Horror", 15.99, 23);
+INSERT INTO Bookstore VALUES (7, "Gwendy's Magic Feather", "King, Stephen", "Horror", 15.99, 17);
+INSERT INTO Bookstore VALUES (8, "Gwendy's Final Task", "King, Stephen", "Horror", 17.99, 10);
+INSERT INTO Bookstore VALUES (9, "The Duckling Gets a Cookie?!", "Willems, Mo", "Childrens", 30.00, 10);
+INSERT INTO Bookstore VALUES (10, "Kiki's Delivery Service", "Kadono, Eiko", "Childrens", 8.99, 7);
+INSERT INTO Bookstore VALUES (11, "Unicorn Magic", "Marshall, Roz", "Sci-Fi/Fantasy", 5.99, 1);
+INSERT INTO Bookstore VALUES (12, "A Court of Crows", "Eveland, Eliza", "Sci-Fi/Fantasy", 16.99, 5);
+INSERT INTO Bookstore VALUES (13, "East", "Pattou, Edith", "Young Adult", 9.99, 4);
+INSERT INTO Bookstore VALUES (14, "The Summerhouse", "Deveraux, Jude", "Romance", 7.99, 2);
+INSERT INTO Bookstore VALUES (15, "How to Train Your Dragon", "Cowell, Cressida", "Childrens", 8.99, 5);
+
+--display all books the store has in stock
+SELECT * FROM Bookstore;
+
+--display quantity of books for each section of the store
+SELECT section, SUM(quantity) FROM Bookstore GROUP BY section;
+
+--display books with quantities less than 10 ordered by store section
+SELECT * FROM Bookstore WHERE quantity < 10 ORDER BY section;
+
+--display total book inventory costs
+SELECT SUM(price) FROM Bookstore
