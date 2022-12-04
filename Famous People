@@ -1,0 +1,46 @@
+/* Create table about the people and what they do here */
+
+CREATE TABLE authors (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    last_name TEXT,
+    first_name TEXT,
+    published_novels INTEGER);
+
+INSERT INTO authors (last_name, first_name, published_novels) VALUES
+    ("King", "Stephen", 70),
+    ("Meyer", "Stephanie", 9),
+    ("Rowling", "JK", 25),
+    ("Briggs", "Patricia", 24),
+    ("Andrews", "Ilona", 31),
+    ("Osborne", "Mary Pope", 75);
+    
+SELECT * FROM authors;
+
+CREATE TABLE books (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    author TEXT,
+    title TEXT,
+    series TEXT,
+    series_number INTEGER);
+    
+INSERT INTO books (author, title, series, series_number) VALUES
+    ("Osborne", "My Brother's Keeper", "Virginia's Civil War Diary", 1),
+    ("Osborne", "Dinosaurs Before Dark", "Magic Tree House", 1),
+    ("Osborne", "After the Rain", "Virginia's Civil War Diary", 2),
+    ("Briggs", "Masques", "Sianim", 1),
+    ("Briggs", "Moon Called", "Mercedes Thompson", 1),
+    ("King", "The Gunslinger", "The Dark Tower", 1),
+    ("King", "The Drawing of the Three", "The Dark Tower", 2),
+    ("King", "The Waste Lands", "The Dark Tower", 3),
+    ("Rowling", "Harry Potter and the Sorcerer's Stone", "Harry Potter", 1),
+    ("Rowling", "Harry Potter and the Prisoner of Azkaban", "Harry Potter", 3),
+    ("Andrews", "Magic Bites", "Kate Daniels", 1);
+    
+SELECT * FROM books;
+
+SELECT a.last_name, a.first_name, b.series
+    FROM authors a
+    JOIN books b
+    ON a.last_name = b.author
+    GROUP BY b.author, b.series;
+    
