@@ -1,4 +1,3 @@
-/* Put your data in here and query it! */
 /*  Friendly Card Game Results:
 During this past winter, a few friends got together every Wednesday night for a friendly game of cards.  On some nights they'd play two games, but never the same game twice on the same night.  The usual players were Spunky Sam, Marcimus, Winston, and Hopper.  Sometimes, one of the friends couldn't make it, so there were only three players.  But sometimes they'd call another friend to fill-in.  In every game they played, the one with the hightest score was declared the winner.  These are their results:
 Created by: https://www.khanacademy.org/profile/brianduckworth
@@ -11,7 +10,8 @@ CREATE TABLE card_games
 	player_name TEXT,
 	score INTEGER);
     
-INSERT INTO card_games(date_played,game_name,player_name,score) VALUES 	('2015/01/07','Rummy','Spunky Sam',226),
+INSERT INTO card_games(date_played,game_name,player_name,score) VALUES
+	('2015/01/07','Rummy','Spunky Sam',226),
 	('2015/01/07','Rummy','Marcimus',418),
 	('2015/01/07','Rummy','Winston',523),
 	('2015/01/07','Rummy','Hopper',311),
@@ -80,5 +80,57 @@ SELECT game_name FROM card_games
     GROUP BY game_name;
     
 SELECT date_played, game_name, COUNT(DISTINCT player_name) AS players FROM card_games
-    GROUP BY date_played;
+    GROUP BY date_played, game_name;
     
+SELECT id, date_played, player_name, score FROM card_games
+	WHERE game_name="Rummy";
+	
+CREATE TABLE rummy_games
+	(id INTEGER PRIMARY KEY AUTOINCREMENT,
+	date_played TEXT,
+	player_name TEXT,
+	score INTEGER);
+    
+INSERT INTO rummy_games(date_played,player_name,score) VALUES
+     ('2015/01/07','Spunky Sam',226),
+	('2015/01/07','Marcimus',418),
+	('2015/01/07','Winston',523),
+	('2015/01/07','Hopper',311),
+	('2015/01/21','Spunky Sam',473),
+	('2015/01/21','Marcimus',324),
+	('2015/01/21','Hopper',516),
+	('2015/02/11','Amelia',525),
+	('2015/02/11','Marcimus',419),
+	('2015/02/11','Winston',316),
+	('2015/02/11','Hopper',398),
+	('2015/03/04','Spunky Sam',378),
+	('2015/03/04','Marcimus',327),
+	('2015/03/04','Winston',413),
+	('2015/03/04','Hopper',517),
+	('2015/03/25','Spunky Sam',416),
+	('2015/03/25','Marcimus',505),
+	('2015/03/25','Winston',397),
+	('2015/03/25','Hopper',443);	
+
+SELECT * FROM rummy_games;
+
+SELECT date_played, player_name, AVG(score) AS avg_score FROM rummy_games
+    GROUP BY date_played, player_name
+    HAVING avg_score >= 300
+    ;
+
+SELECT date_played, player_name, AVG(score) AS avg_score FROM rummy_games
+    GROUP BY date_played, player_name
+    HAVING avg_score >= 300
+    AND avg_score <= 400
+    ;
+
+/*CASE */
+SELECT player_name, score 
+    CASE
+        WHEN score >= 300 THEN "average"
+        WHEN score >= 450 THEN "above average"
+        ELSE "below average"
+    END AS "target_average" 
+FROM rummy_games
+    ;
