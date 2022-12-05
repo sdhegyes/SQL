@@ -1,0 +1,50 @@
+/* Finding out what columns are in the customer table. */
+SELECT * FROM BIT_DB.customers
+    LIMIT 20;
+    
+/* Finding out what columns are in the sales tables. */
+SELECT * FROM BIT_DB.JanSales
+    LIMIT 20;
+
+        
+/* 1. How many orders were placed in January? */
+SELECT COUNT(orderID)
+    FROM BIT_DB.JanSales;
+    
+/* 2. How many of those orders were for an iPhone? */
+SELECT COUNT(orderID)
+    FROM BIT_DB.JanSales
+    WHERE Product="iPhone";
+    
+/* 3. Select the customer account numbers for all the orders that were placed in February. */
+SELECT c.acctnum
+    FROM BIT_DB.FebSales fs
+    LEFT JOIN BIT_DB.customers c
+    ON fs.orderID = c.order_id;
+    
+/* 4. Which product was the cheapest one sold in January, and what was the price? */
+SELECT DISTINCT Product, MIN(price) AS price
+    FROM BIT_DB.JanSales
+    GROUP BY Product
+    ORDER BY price
+    LIMIT 1;
+    
+/* 5. What is the total revenue for each product sold in January? (Revenue can be calculated using the number of products sold and the price of the products). */
+SELECT Product, SUM(Quantity * price)
+    AS total_revenue
+    FROM BIT_DB.JanSales
+    GROUP BY Product;
+
+/* 6. Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue? */
+SELECT Product, Quantity, SUM(Quantity * price)
+    AS total_revenue
+    FROM BIT_DB.FebSales
+    WHERE location="548 Lincoln St, Seattle, WA 98101";
+    
+/* 7. How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers? */
+SELECT COUNT(DISTINCT c.acctnum), AVG(fs.Quantity * fs.price)
+    FROM BIT_DB.FebSales AS fs
+    LEFT JOIN BIT_DB.customers AS c
+    ON fs.orderID = c.order_id
+    WHERE fs.Quantity > 2;
+    
