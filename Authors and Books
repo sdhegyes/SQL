@@ -1,0 +1,129 @@
+/* Create table about the people and what they do here */
+
+CREATE TABLE authors 
+  (ID INTEGER PRIMARY KEY AUTOINCREMENT,
+	last_name TEXT,
+	first_name TEXT);
+
+INSERT INTO authors (last_name, first_name) VALUES
+	("Hunter", "Erin"),
+	("King", "Stephen"),
+	("Blain", "RJ"),
+	("Briggs","Patricia"),
+	("Lackey","Mercedes"),
+	("Andrews","Ilona"),
+	("Patterson","James"),
+	("Virdi", "RR");
+
+CREATE TABLE books 
+	(ID INTEGER PRIMARY KEY AUTOINCREMENT,
+	author TEXT,
+	title TEXT,
+	series TEXT,
+	series_number INTEGER,
+	genre TEXT);
+
+INSERT INTO books (author, title, series, series_number, genre) VALUES
+	("Hunter", "Into the Wild", "The Prophecies Begin", 1, "children's literature"),
+	("Hunter", "Fire and Ice", "The Prophecies Begin", 2, "children's literature"),
+	("Hunter", "Forest of Secrets", "The Prophecies Begin", 3, "children's literature"),
+	("Hunter", "Rising Storm", "The Prophecies Begin", 4, "children's literature"),
+	("Hunter", "A Dangerous Path", "The Prophecies Begin", 5, "children's literature"),
+	("Hunter", "The Darkest Hour", "The Prophecies Begin", 6, "children's literature"),
+	("Hunter", "The Sight", "The Power of Three", 1, "children's literature"),
+	("Hunter", "Dark River", "The Power of Three", 2, "children's literature"),
+	("Hunter", "Outcast", "The Power of Three", 3, "children's literature"),
+	("Hunter", "Eclipse", "The Power of Three", 4, "children's literature"),
+	("Hunter", "Long Shadows", "The Power of Three", 5, "children's literature"),
+	("Hunter", "Sunrise", "The Power of Three", 6, "children's literature"),
+	("Hunter", "Lost Stars", "The Broken Code", 1, "children's literature"),
+	("Hunter", "The Silent Thaw", "The Broken Code", 2, "children's literature"),
+	("Hunter", "Veil of Shadows", "The Broken Code", 3, "children's literature"),
+	("Hunter", "Darkness Within", "The Broken Code", 4, "children's literature"),
+	("Hunter", "The Place of No Stars", "The Broken Code", 5, "children's literature"),
+	("Hunter", "A Light in the Mist", "The Broken Code", 6, "children's literature"),
+	("Virdi", "The First Binding", "Takes of Tremaine", 1, "fantasy"),
+	("Virdi", "Goblin King", "Monster Slayer Online", 1, "LitRPG"),
+	("Virdi", "Beast Queen", "Monster Slayer Online", 2, "LitRPG"),
+	("Virdi", "Dangerous Ways", "The Books of Winter", 1, "fantasy"),
+	("Virdi", "Grave Beginnings", "The Grave Report", 1, "urban fantasy"),
+	("Virdi", "Grave Measures", "The Grave Report", 2, "urban fantasy"),
+	("Virdi", "Grave Dealings", "The Grave Report", 3, "urban fantasy"),
+	("Lackey", "Beyond", "The Founding of Valdemar", 1, "fantasy"),
+	("Lackey", "Into the West", "The Founding of Valdemar", 2, "fantasy"),
+	("Lackey", "The Black Gryphon", "Mage Wars", 1, "fantasy"),
+	("Lackey", "The White Gryphon", "Mage Wars", 2, "fantasy"),
+	("Lackey", "The Silver Gryphon", "Mage Wars", 3, "fantasy"),
+	("Lackey", "Winds of Fate", "Mage Winds", 1, "fantasy"),
+	("Lackey", "Winds of Change", "Mage Winds", 2, "fantasy"),
+	("Lackey", "Winds of Fury", "Mage Winds", 3, "fantasy"),
+	("Lackey", "The Oathbound", "Vows and Honor", 1, "fantasy"),
+	("Lackey", "Oathbreakers", "Vows and Honor", 2, "fantasy"),
+	("Lackey", "Oathblood", "Vows and Honor", 3, "fantasy"),
+	("Blain", "Blood Bound", "A Lowrance Vampires Novel", 1, "urban fantasy"),
+	("Blain", "Silent Stalker", "A Lowrance Vampires Novel", 2, "urban fantasy"),
+	("Blain", "Client From Hell", "A Magically Hellish Comedy (with a Body Count)", 1, "urban fantasy"),
+	("Blain", "Inquisitor", "Witch & Wolf", 1, "urban fantasy"),
+	("Blain", "Winter Wolf", "Witch & Wolf", 2, "urban fantasy"),
+	("Blain", "Blood Diamond", "Witch & Wolf", 3, "urban fantasy"),
+	("Blain", "Silver Bullet", "Witch & Wolf", 4, "urban fantasy"),
+	("Patterson", "The Angel Experiment", "Maximum Ride", 1, "YA fantasy"),
+	("Patterson", "School's Out—Forever", "Maximum Ride", 2, "YA fantasy"),
+	("Patterson", "Saving the World and Other Extreme Sports", "Maximum Ride", 3, "YA fantasy"),
+	("Patterson", "The Final Warning", "Maximum Ride", 4, "YA fantasy"),
+	("Patterson", "Max", "Maximum Ride", 5, "YA fantasy"),
+	("Patterson", "Fang", "Maximum Ride", 6, "YA fantasy"),
+	("Patterson", "Angel", "Maximum Ride", 7, "YA fantasy"),
+	("Patterson", "Nevermore", "Maximum Ride", 8, "YA fantasy"),
+	("Patterson", "Maximum Ride Forever", "Maximum Ride", 9, "YA fantasy"),
+	("King", "The Gunslinger", "The Dark Tower", 1, "dark fantasy"),
+	("King", "The Drawing of the Three", "The Dark Tower", 2, "dark fantasy"),
+	("King", "The Waste Lands", "The Dark Tower", 3, "dark fantasy"),
+	("King", "Wizard and Glass", "The Dark Tower", 4, "dark fantasy"),
+	("King", "Wolves of the Calla", "The Dark Tower", 5, "dark fantasy"),
+	("King", "Song of Susannah", "The Dark Tower", 6, "dark fantasy"),
+	("King", "The Dark Tower", "The Dark Tower", 7, "dark fantasy"),
+	("Briggs", "Cry Wolf", "Alpha & Omega", 1, "urban fantasy"),
+	("Briggs", "Hunting Ground", "Alpha & Omega", 2, "urban fantasy"),
+	("Briggs", "Fair Game", "Alpha & Omega", 3, "urban fantasy"),
+	("Briggs", "Dead Heat", "Alpha & Omega", 4, "urban fantasy"),
+	("Briggs", "Burn Bright", "Alpha & Omega", 5, "urban fantasy"),
+	("Briggs", "Wild Sign", "Alpha & Omega", 6, "urban fantasy"),
+	("Briggs", "Raven's Shadow", "Raven", 1, "fantasy"),
+	("Briggs", "Raven's Strike", "Raven", 2, "fantasy"),
+	("Andrews", "Clean Sweep", "Innkeeper Chronicles", 1, "urban fantasy"),
+	("Andrews", "Sweep in Peace", "Innkeeper Chronicles", 2, "urban fantasy"),
+	("Andrews", "One Fell Sweep", "Innkeeper Chronicles", 3, "urban fantasy"),
+	("Andrews", "Sweep of the Blade", "Innkeeper Chronicles", 4, "urban fantasy"),
+	("Andrews", "Sweep with Me", "Innkeeper Chronicles", 5, "urban fantasy"),
+	("Andrews", "Sweep of the Heart", "Innkeeper Chronicles", 6, "urban fantasy"),
+	("Andrews", "Burn for Me", "Hidden Legacy", 1, "urban fantasy"),
+	("Andrews", "White Hot", "Hidden Legacy", 2, "urban fantasy"),
+	("Andrews", "Wildfire", "Hidden Legacy", 3, "urban fantasy"),
+	("Andrews", "Sapphire Flames", "Hidden Legacy", 4, "urban fantasy"),
+	("Andrews", "Emerald Blaze", "Hidden Legacy", 5, "urban fantasy"),
+	("Andrews", "Ruby Fever", "Hidden Legacy", 6, "urban fantasy");
+
+SELECT a.last_name, a.first_name, b.series
+    FROM authors a
+    JOIN books b
+    ON a.last_name = b.author
+    GROUP BY b.author, b.series;
+    
+SELECT a.last_name, a.first_name, COUNT(b.series * series_number) AS books_in_series, b.series
+    FROM authors a
+    JOIN books b
+    ON a.last_name = b.author
+    GROUP BY b.author, b.series;
+    
+SELECT a.last_name, COUNT(DISTINCT b.series) as series, b.genre
+    FROM authors a
+    JOIN books b
+    ON a.last_name = b.author
+    GROUP By b.author;
+    
+SELECT a.last_name, a.first_name, b.genre
+    FROM authors a
+    JOIN books b
+    ON a.last_name = b.author
+    GROUP BY b.author, b.genre;
