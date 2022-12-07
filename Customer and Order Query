@@ -5,7 +5,6 @@ SELECT * FROM BIT_DB.customers
 /* Finding out what columns are in the sales tables. */
 SELECT * FROM BIT_DB.JanSales
     LIMIT 20;
-
         
 /* 1. How many orders were placed in January? */
 SELECT COUNT(orderID)
@@ -69,3 +68,37 @@ SELECT DISTINCT Product, SUM(Quantity)
     WHERE location LIKE "%Los Angeles%"
     GROUP BY Product;    
     
+/* 12. Which locations in New York received at least 3 orders in January, and how many orders did they each receive? */
+SELECT DISTINCT location, COUNT(orderID)
+    FROM BIT_DB.JanSales
+    WHERE location LIKE "%NY%"
+    GROUP BY location
+    HAVING COUNT(orderID) >= 3;
+    
+/* 13. How many of each type of headphone were sold in February? */
+SELECT Product, SUM(Quantity) AS Quantity
+    FROM BIT_DB.FebSales
+    WHERE Product LIKE "%headphone%"
+    GROUP BY Product;
+    
+/* 14. What was the average amount spent per account in February? */
+SELECT SUM(fs.Quantity * fs.price)/COUNT(c.acctnum)
+    AS Average_Spent
+    FROM BIT_DB.FebSales fs
+    LEFT JOIN customers c
+    ON fs.orderID = c.order_ID;
+    
+/* 15. What was the average quantity of products purchased per account in February?*/
+SELECT SUM(fs.Quantity)/COUNT(c.acctnum)
+    AS Average_Quantity
+    FROM BIT_DB.FebSales fs
+    LEFT JOIN customers c
+    ON fs.orderID = c.order_ID;
+    
+/* 16. Which product brought in the most revenue in January and how much revenue did it bring in total? */
+SELECT DISTINCT Product, SUM(Quantity*price) 
+    AS Revenue
+    FROM BIT_DB.JanSales
+    GROUP BY Product
+    ORDER by SUM(Quantity*price) DESC
+    LIMIT 5;    
