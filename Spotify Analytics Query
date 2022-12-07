@@ -1,0 +1,70 @@
+/* For this project, I downloaded Spotify data from Kaggle. I created a table to import the data into and then ran analytic queries on the data I acquired. */
+
+CREATE TABLE BIT_DB.SpotifyData 
+    (ID INTEGER PRIMARY KEY,
+    artist_name VARCHAR NOT NULL,
+    track_name VARCHAR NOT NULL,
+    track_id VARCHAR NOT NULL,
+    popularity INTEGER NOT NULL,
+    danceability DECIMAL (4,3) NOT NULL,
+    energy DECIMAL (4,3) NOT NULL,
+    song_key INTEGER NOT NULL,
+    loudness DECIMAL (4,3) NOT NULL,
+    song_mode INTEGER NOT NULL,
+    speechiness DECIMAL (5,4) NOT NULL,
+    acousticness DECIMAL (6,5) NOT NULL,
+    instrumentalness TEXT NOT NULL,
+    liveness DECIMAL (5,4) NOT NULL,
+    valence DECIMAL (4,3) NOT NULL,
+    tempo DECIMAL (6,3) NOT NULL,
+    duration_ms INTEGER NOT NULL,
+    time_signature INTEGER NOT NULL);
+    
+/* First, I checked that all my data imported correctly. (/
+SELECT * FROM BID_DB.SpotifyData;
+    
+/* Once I certified all my information had imported correctly, I could test a few queries listed below. */
+    
+/* What is the average danceability by artist and track? */
+SELECT artist_name, track_name, AVG(danceability)
+  AS average_danceability
+  FROM BIT_DB.SpotifyData
+  GROUP BY artist_name, track_name
+  ORDER BY average_danceability DESC;
+      
+/* Who are the top 10 artists based on popularity? */
+SELECT DISTINCT artist_name
+  FROM BIT_DB.SpotifyData
+  GROUP BY popularity
+  ORDER BY popularity DESC
+  LIMIT 10;
+  
+/* What artist released the longest song? */
+SELECT artist_name, track_name, SUM(duration_ms / 60)
+  AS duration_s
+  FROM BIT_DB.SpotifyData
+  GROUP BY duration_ms
+  ORDER BY duration_ms DESC
+  LIMIT 1;
+  
+/* What's the average danceability for the 10 most popular songs? */
+SELECT AVG(danceability), track_name
+  AS average_danceability
+  FROM BIT_DB.SpotifyData
+  GROUP BY popularity
+  ORDER BY popularity DESC
+  LIMIT 10;
+  
+/* What is the energy, valence and liveness of the 10 least popular songs? */
+SELECT track_name, artist_name, energy, valence, liveness
+  FROM BIT_DB.SpotifyData
+  GROUP BY popularity
+  ORDER BY popularity ASC
+  LIMIT 10;
+  
+/* What 5 songs are the closest to being live? */
+SELECT track_name, artist_name
+  FROM BIT_DB.SpotifyData
+  GROUP BY liveness
+  ORDER BY liveness DESC
+  LIMIT 5;
