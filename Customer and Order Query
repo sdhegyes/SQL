@@ -48,3 +48,24 @@ SELECT COUNT(DISTINCT c.acctnum), AVG(fs.Quantity * fs.price)
     ON fs.orderID = c.order_id
     WHERE fs.Quantity > 2;
     
+/* 8.  What were the dates and times of all orders made between midnight of 13 Feb 2019 and midnight 18 Feb 2019? */
+SELECT orderdate
+    FROM BIT_DB.FebSales
+    WHERE orderdate BETWEEN "02/13/19 00:00" AND "02/18/19 00:00";
+    
+/* 9. At what location was an order made on 18 Feb 2019 at 1:35? */
+SELECT location
+    FROM BIT_DB.FebSales 
+    WHERE orderdate = "02/18/19 01:35";
+    
+/* 10. What are the total number of sales ordered 18 FEb 2019? */
+SELECT SUM(Quantity)
+    FROM BIT_DB.FebSales 
+    WHERE orderdate LIKE "%02/18/19%";
+    
+/* 11. List all the products sold in Los Angeles in February, and include how many of each were sold. */
+SELECT DISTINCT Product, SUM(Quantity)
+    FROM BIT_DB.FebSales
+    WHERE location LIKE "%Los Angeles%"
+    GROUP BY Product;    
+    
