@@ -1,0 +1,158 @@
+/* 1. Show Customers (their full names, customer ID, and country) who are not in the US. */ 
+SELECT (FirstName || ' ' || LastName) AS FullName, CustomerId, Country FROM chinook.customers
+    WHERE Country <> "USA"
+    GROUP BY FullName;
+
+/* 2. Show only the Customers from Brazil. */
+SELECT CustomerId, (FirstName || ' ' || LastName) AS FullName FROM chinook.customers
+    WHERE Country LIKE "%Brazil%";
+    
+/* 3. Find the Invoices of customers who are from Brazil. Show the customer's full name, Invoice ID, Date of the invoice, and billing country */
+SELECT (c.FirstName || ' ' || c.LastName) AS FullName, i.InvoiceId, i.InvoiceDate, i.BillingCountry
+    FROM chinook.invoices i
+    LEFT JOIN chinook.customers c
+    ON i.CustomerId = c.CustomerId
+    WHERE i.BillingCountry = "Brazil"
+    GROUP BY FullName;
+    
+/* 4. Show the Employees who are Sales Agents. */
+SELECT (FirstName || ' ' || LastName) AS FullName
+    FROM chinook.employees
+    WHERE Title LIKE "%Sales%Agent%"
+    ORDER BY FullName ASC;
+    
+/* 5. Find a unique/distinct list of billing countries from the Invoice table. */
+SELECT DISTINCT BillingCountry FROM chinook.invoices
+    ORDER BY BillingCountry ASC;
+    
+/* 6. Provide a query that shows the invoices associated with each sales agent. */
+SELECT i.InvoiceId, (e.FirstName || ' ' || e.LastName) AS FullName
+    FROM chinook.invoices i
+    JOIN chinook.employees e
+        ON e.EmployeeId = c.SupportRepId
+    JOIN chinook.customers c
+        ON i.CustomerId = c.CustomerId    
+    WHERE e.Title LIKE "%Sales%Agent%"
+    GROUP BY i.InvoiceId;
+    
+/* 7. Show the Invoice Total, Customer name, Country, and Sales Agent name for all invoices and customers. */
+SELECT i.Total, (c.FirstName || ' ' || c.LastName) AS CustomerName, c.Country, (e.FirstName || ' ' || e.LastName) AS SalesAgent
+    FROM chinook.invoices i
+    JOIN chinook.customers c
+        ON i.CustomerId = c.customerId
+    JOIN chinook.employees e
+        ON e.EmployeeId = c.SupportRepId
+    GROUP BY i.InvoiceId, CustomerName;
+        
+/* 8. How many Invoices were there in 2009? */
+SELECT COUNT(InvoiceId) AS Invoices FROM chinook.invoices
+    WHERE InvoiceDate LIKE "%2009%";
+    
+/* 9. What are the total sales for 2009? */
+SELECT ROUND(SUM(Total)) AS TotalSales FROM chinook.invoices
+    WHERE InvoiceDate LIKE "%2009%";
+    
+/* 10. Write a query that includes the purchased track name with each invoice line ID. */
+SELECT t.Name, ii.InvoiceLineId
+    FROM chinook.tracks t
+    JOIN chinook.invoice_items ii
+        ON t.TrackId = ii.TrackId;
+
+/* 11. Write a query that includes the purchased track name AND artist name with each invoice line ID. */
+;SELECT t.Name AS Track, art.name AS Artist, ii.InvoiceLineId
+    FROM chinook.tracks t
+    JOIN chinook.artists art
+        ON art.ArtistId = alb.ArtistId
+    JOIN chinook.albums alb
+        ON alb.AlbumId = t.AlbumId
+    JOIN chinook.invoice_items ii
+        ON ii.TrackId = t.TrackId
+    ORDER BY Artist;
+    
+/* 12. Provide a query that shows all the Tracks, and include the Album name, Media type, and Genre. */
+SELECT t.Name AS 'Track Title', alb.Title AS 'Album Name', mt.Name AS 'Media Type', g.Name AS 'Genre'
+    FROM chinook.tracks t
+    JOIN chinook.media_types mt
+        ON mt.MediaTypeId = t.MediaTypeId
+    JOIN chinook.genres g
+        ON g.GenreID = t.GenreId
+    JOIN chinook.albums alb
+        ON alb.AlbumId = t.AlbumId;
+        
+/* 13. Show the total sales made by each sales agent. */
+SELECT ROUND(SUM(i.Total), 2) AS 'Total Sales', (e.FirstName || ' ' || e.LastName) AS 'Full Name'
+    FROM chinook.invoices i
+    JOIN chinook.employees e
+        ON e.EmployeeId = c.SupportRepId
+    JOIN chinook.customers c
+        ON i.CustomerId = c.CustomerId
+    WHERE e.Title LIKE "%Sales%Agent%"
+    GROUP BY e.FirstName;
+    
+/* 14. Which sales agent made the most dollars in sales in 2009? */
+SELECT (e.FirstName || ' ' || e.LastName) AS 'Full Name', ROUND(SUM(i.total), 2) AS 'Total Sales'
+    FROM chinook.invoices i
+    JOIN chinook.employees e
+        ON e.EmployeeId = c.SupportRepId
+    JOIN chinook.customers c
+        ON i.CustomerId = c.CustomerId
+    WHERE e.Title LIKE "%Sales%Agent%"
+    AND i.InvoiceDate LIKE "%2009%"
+    GROUP BY e.FirstName
+    ORDER BY 'Total Sales' DESC LIMIT 1;
+    
+/* 15. Show the number of tracks sold per genre. */
+SELECT COUNT(t.Name) AS 'Number of Tracks', g.Name AS 'Genre'
+    FROM chinook.genres g
+    JOIN chinook.tracks t
+        ON t.GenreId = g.GenreId
+    GROUP BY g.name;
+    
+/* 16. What is the most popular genre based on country? */
+;SELECT g.Name AS 'Genre', COUNT(g.name) AS 'Genres Purchased', c.Country
+    FROM chinook.genres g
+    JOIN chinook.tracks t
+        ON t.GenreId = g.GenreId
+    JOIN chinook.invoice_items ii
+        ON ii.TrackId = t.TrackId
+    JOIN chinook.invoices i
+        ON i.InvoiceId = ii.InvoiceId
+    JOIN chinook.customers c
+        ON c.CustomerID = i.CustomerId
+    GROUP BY c.Country;
+    
+/* 17. Show which customers created playlists from tracks they purhcased. */
+SELECT (c.FirstName || ' ' || c.LastName) AS 'Full Name', p.Name
+    FROM chinook.playlists p
+    JOIN chinook.playlist_track pt
+        ON pt.PlaylistId = p.PlaylistId
+    JOIN chinook.tracks t
+        ON t.TrackId = pt.TrackId
+    JOIN chinook.invoice_items ii
+        ON ii.TrackId = t.TrackId
+    JOIN chinook.invoices i
+        ON i.InvoiceID = ii.InvoiceId
+    JOIN chinook.customers c
+        ON c.CustomerID = i.CustomerId;
+        
+/* 18. What are most playlists titled? */
+SELECT Name, COUNT(Name) AS 'Similar PLaylists'
+    FROM chinook.playlists
+    GROUP BY Name, 'Similar Playlists';
+    
+/* 19. Show the average number of tracks per playlist. */
+SELECT ROUND(AVG(pt.TrackId), 2) AS 'Average Tracks', p.Name AS 'Playlist'
+    FROM chinook.playlists p
+    JOIN chinook.playlist_track pt
+        ON p.PlaylistId = pt.PlaylistId
+    GROUP BY p.Name;
+    
+/* 20. What were the 10 most expensive tracks? What albums did they come from, artists produced them? */
+SELECT t.Name AS 'Track', t.UnitPrice AS 'Cost', alb.Title AS 'Album', art.Name AS 'Artist'
+    FROM chinook.tracks t
+    JOIN chinook.artists art
+        ON art.ArtistId = alb.ArtistId
+    JOIN chinook.albums alb
+        ON alb.AlbumId = t.AlbumId
+    ORDER BY t.UnitPrice DESC
+    LIMIT 10;
